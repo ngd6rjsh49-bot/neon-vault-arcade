@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOLT.GG — Social Arcade & Provably Fair Originals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Persistent Left Sidebar -->
+    <aside class="sidebar">
+      <div class="brand-header">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" fill="#10B981" stroke="#34D399" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">VOLT<span class="brand-accent">.GG</span></span>
+          <span class="brand-badge">PLAY MONEY</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">ORIGINALS ARCADE</div>
+        <nav class="game-nav" id="game-nav">
+          <button class="nav-item active" data-game="crash">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                <polyline points="16 7 22 7 22 13"></polyline>
+              </svg>
+            </span>
+            <span class="nav-name">Crash</span>
+            <span class="nav-tag hot">LIVE</span>
+          </button>
+
+          <button class="nav-item" data-game="mines">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              </svg>
+            </span>
+            <span class="nav-name">Mines</span>
+            <span class="nav-tag">99% RTP</span>
+          </button>
+
+          <button class="nav-item" data-game="plinko">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="5" r="2"></circle>
+                <circle cx="8" cy="11" r="1.5"></circle>
+                <circle cx="16" cy="11" r="1.5"></circle>
+                <circle cx="5" cy="17" r="1.5"></circle>
+                <circle cx="12" cy="17" r="1.5"></circle>
+                <circle cx="19" cy="17" r="1.5"></circle>
+              </svg>
+            </span>
+            <span class="nav-name">Plinko</span>
+            <span class="nav-tag">1000x</span>
+          </button>
+
+          <button class="nav-item" data-game="dice">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <circle cx="15.5" cy="8.5" r="1.5"></circle>
+                <circle cx="15.5" cy="15.5" r="1.5"></circle>
+                <circle cx="8.5" cy="15.5" r="1.5"></circle>
+              </svg>
+            </span>
+            <span class="nav-name">Dice</span>
+          </button>
+
+          <button class="nav-item" data-game="limbo">
+            <span class="nav-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L15 8L21 9L17 14L18 20L12 17L6 20L7 14L3 9L9 8L12 2Z"></path>
+              </svg>
+            </span>
+            <span class="nav-name">Limbo</span>
+            <span class="nav-tag">FAST</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Persistent Player Session Stats Card -->
+      <div class="sidebar-stats">
+        <div class="stats-header">
+          <span>VAULT ANALYTICS</span>
+          <button id="reset-stats-btn" class="text-btn" title="Reset Statistics">Reset</button>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Total Wagered</span>
+          <span class="stat-val mono" id="stat-wagered">0.00</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Net Profit</span>
+          <span class="stat-val mono" id="stat-profit">+0.00</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Biggest Win</span>
+          <span class="stat-val mono gold" id="stat-biggest">0.00</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Bets Placed</span>
+          <span class="stat-val mono" id="stat-count">0</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="provably-badge">
+          <span class="shield-dot"></span>
+          <div>
+            <div class="pf-title">Provably Fair RNG</div>
+            <div class="pf-sub">99.0% RTP • Virtual Credits Only</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Column -->
+    <div class="main-column">
+      <!-- Sleek Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="active-game-indicator">
+            <span class="pulse-dot"></span>
+            <span id="header-game-title">CRASH</span>
+            <span class="header-edge-pill">1% House Edge</span>
+          </div>
+        </div>
+
+        <div class="topbar-center">
+          <div class="wallet-box" id="wallet-box">
+            <div class="wallet-currency">
+              <span class="credit-icon">◈</span>
+              <span class="credit-label">CREDITS</span>
+            </div>
+            <div class="wallet-balance mono" id="balance-display">10,000.00</div>
+            <button class="refill-btn" id="refill-btn" title="Refill Free Play Credits to 10,000.00">
+              <span>+ Refill Free Credits</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="icon-btn" id="fairness-btn" title="Provably Fair Seed Info">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span class="btn-label-sm">Fairness</span>
+          </button>
+          <button class="icon-btn" id="mute-btn" title="Toggle Sound Effects">
+            <svg id="sound-on-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="sound-off-icon" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Workspace Stage: Unified Betting Control Panel + Game Canvas -->
+      <main class="workspace">
+        <div class="game-container">
+          <!-- Left Betting Control Panel -->
+          <section class="control-panel">
+            <div class="panel-header">
+              <span class="panel-mode-tab active">MANUAL BET</span>
+              <span class="panel-rtp-tag mono">RTP 99.0%</span>
+            </div>
+
+            <!-- Shared Bet Amount Input -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="bet-amount">Bet Amount</label>
+                <span class="mono text-muted" id="bet-pct-label">1.0% of bankroll</span>
+              </div>
+              <div class="input-with-QuickBtns">
+                <div class="currency-input-wrap">
+                  <span class="input-prefix">◈</span>
+                  <input type="number" id="bet-amount" class="mono-input" value="100.00" min="1" step="1" />
+                </div>
+                <div class="quick-bet-btns">
+                  <button type="button" class="q-btn mono" data-bet-mod="half">½</button>
+                  <button type="button" class="q-btn mono" data-bet-mod="double">2×</button>
+                  <button type="button" class="q-btn mono" data-bet-mod="max">MAX</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Game Specific Controls Container -->
+            <div id="game-specific-controls" class="specific-controls">
+              <!-- CRASH CONTROLS -->
+              <div class="g-ctrl" data-ctrl="crash">
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label for="crash-auto-cashout">Auto Cashout (×)</label>
+                    <span class="mono text-amber" id="crash-win-chance">Chance: 49.50%</span>
+                  </div>
+                  <div class="input-with-QuickBtns">
+                    <div class="currency-input-wrap">
+                      <span class="input-prefix">×</span>
+                      <input type="number" id="crash-auto-cashout" class="mono-input" value="2.00" min="1.01" max="1000" step="0.10" />
+                    </div>
+                    <div class="quick-bet-btns">
+                      <button type="button" class="q-btn mono" data-crash-preset="1.50">1.5×</button>
+                      <button type="button" class="q-btn mono" data-crash-preset="2.00">2.0×</button>
+                      <button type="button" class="q-btn mono" data-crash-preset="5.00">5.0×</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label>Profit on Target</label>
+                  </div>
+                  <div class="readonly-box mono" id="crash-target-profit">+100.00 ◈</div>
+                </div>
+              </div>
+
+              <!-- MINES CONTROLS -->
+              <div class="g-ctrl hidden" data-ctrl="mines">
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label for="mines-count">Mines Count (1 – 24)</label>
+                    <span class="mono text-emerald" id="mines-gems-left">22 Gems</span>
+                  </div>
+                  <div class="mines-selector-row">
+                    <input type="range" id="mines-count" min="1" max="24" value="3" class="neon-slider" />
+                    <span class="mono mines-badge" id="mines-count-val">3</span>
+                  </div>
+                  <div class="preset-pills" id="mines-presets">
+                    <button type="button" class="pill-btn mono" data-mines="1">1</button>
+                    <button type="button" class="pill-btn mono active" data-mines="3">3</button>
+                    <button type="button" class="pill-btn mono" data-mines="5">5</button>
+                    <button type="button" class="pill-btn mono" data-mines="10">10</button>
+                    <button type="button" class="pill-btn mono" data-mines="24">24</button>
+                  </div>
+                </div>
+                <div class="mines-live-info" id="mines-live-panel">
+                  <div class="mini-stat-grid">
+                    <div class="mini-stat">
+                      <span>Current Multiplier</span>
+                      <strong class="mono text-amber" id="mines-curr-mult">1.00×</strong>
+                    </div>
+                    <div class="mini-stat">
+                      <span>Next Tile Multiplier</span>
+                      <strong class="mono text-emerald" id="mines-next-mult">1.12×</strong>
+                    </div>
+                  </div>
+                  <button type="button" class="secondary-action-btn" id="mines-random-btn" disabled>
+                    Pick Random Tile
+                  </button>
+                </div>
+              </div>
+
+              <!-- PLINKO CONTROLS -->
+              <div class="g-ctrl hidden" data-ctrl="plinko">
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label>Risk Level</label>
+                  </div>
+                  <div class="segmented-control" id="plinko-risk-group">
+                    <button type="button" class="seg-btn" data-risk="low">Low</button>
+                    <button type="button" class="seg-btn active" data-risk="medium">Medium</button>
+                    <button type="button" class="seg-btn" data-risk="high">High</button>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label for="plinko-rows">Pin Rows (8 – 16)</label>
+                    <span class="mono text-amber" id="plinko-rows-val">12 Rows</span>
+                  </div>
+                  <div class="preset-pills" id="plinko-rows-group">
+                    <button type="button" class="pill-btn mono" data-rows="8">8</button>
+                    <button type="button" class="pill-btn mono" data-rows="10">10</button>
+                    <button type="button" class="pill-btn mono active" data-rows="12">12</button>
+                    <button type="button" class="pill-btn mono" data-rows="14">14</button>
+                    <button type="button" class="pill-btn mono" data-rows="16">16</button>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <button type="button" class="secondary-action-btn" id="plinko-burst-btn">
+                    ⚡ Rapid Burst (5 Balls)
+                  </button>
+                </div>
+              </div>
+
+              <!-- DICE CONTROLS -->
+              <div class="g-ctrl hidden" data-ctrl="dice">
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label>Roll Mode</label>
+                    <button type="button" class="text-btn mono" id="dice-flip-btn">⇄ Flip Over/Under</button>
+                  </div>
+                  <div class="readonly-box mono" id="dice-condition-display">Roll Over 50.50</div>
+                </div>
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label>Potential Payout</label>
+                  </div>
+                  <div class="readonly-box mono text-emerald" id="dice-payout-preview">200.00 ◈ (1.98×)</div>
+                </div>
+              </div>
+
+              <!-- LIMBO CONTROLS -->
+              <div class="g-ctrl hidden" data-ctrl="limbo">
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label for="limbo-target">Target Multiplier</label>
+                    <span class="mono text-amber" id="limbo-chance-label">Win Chance: 49.50%</span>
+                  </div>
+                  <div class="input-with-QuickBtns">
+                    <div class="currency-input-wrap">
+                      <span class="input-prefix">×</span>
+                      <input type="number" id="limbo-target" class="mono-input" value="2.00" min="1.01" max="10000" step="0.50" />
+                    </div>
+                    <div class="quick-bet-btns">
+                      <button type="button" class="q-btn mono" data-limbo-preset="2.00">2×</button>
+                      <button type="button" class="q-btn mono" data-limbo-preset="10.00">10×</button>
+                      <button type="button" class="q-btn mono" data-limbo-preset="100.00">100×</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="control-label-row">
+                    <label>Potential Profit</label>
+                  </div>
+                  <div class="readonly-box mono text-emerald" id="limbo-profit-preview">+100.00 ◈</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Primary Action / Cashout Button -->
+            <button type="button" id="primary-play-btn" class="primary-play-btn">
+              <span class="btn-main-text" id="play-btn-text">Place Bet</span>
+              <span class="btn-sub-text mono" id="play-btn-sub">Start Round</span>
+            </button>
+          </section>
+
+          <!-- Right Interactive Game Stage -->
+          <section class="game-stage">
+            <!-- 1. CRASH STAGE -->
+            <div class="stage-view active" id="stage-crash">
+              <div class="stage-top-bar">
+                <div class="stage-label">RECENT CRASHES</div>
+                <div class="history-pills" id="crash-history-bar"></div>
+              </div>
+              <div class="canvas-wrapper crash-canvas-wrap">
+                <canvas id="crash-canvas"></canvas>
+                <div class="crash-hud" id="crash-hud">
+                  <div class="crash-multiplier mono" id="crash-mult-readout">1.00×</div>
+                  <div class="crash-status" id="crash-status-readout">READY TO LAUNCH</div>
+                  <div class="crash-live-payout mono hidden" id="crash-payout-readout">+0.00 ◈</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. MINES STAGE -->
+            <div class="stage-view" id="stage-mines">
+              <div class="stage-top-bar">
+                <div class="stage-label">5×5 QUANTUM MINEFIELD</div>
+                <div class="history-pills" id="mines-history-bar"></div>
+              </div>
+              <div class="mines-stage-body">
+                <div class="mines-grid" id="mines-grid"></div>
+                <div class="mines-cashout-banner hidden" id="mines-win-banner">
+                  <div class="banner-mult mono" id="mines-banner-mult">2.45×</div>
+                  <div class="banner-amt mono" id="mines-banner-amt">+245.00 ◈</div>
+                  <div class="banner-tag">CASHED OUT</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. PLINKO STAGE -->
+            <div class="stage-view" id="stage-plinko">
+              <div class="stage-top-bar">
+                <div class="stage-label">GRAVITY PLINKO MATRIX</div>
+                <div class="history-pills" id="plinko-history-bar"></div>
+              </div>
+              <div class="canvas-wrapper plinko-canvas-wrap">
+                <canvas id="plinko-canvas"></canvas>
+                <div class="plinko-active-counter mono" id="plinko-balls-badge">0 Balls Active</div>
+              </div>
+            </div>
+
+            <!-- 4. DICE STAGE -->
+            <div class="stage-view" id="stage-dice">
+              <div class="stage-top-bar">
+                <div class="stage-label">PRECISION QUANTUM DICE (0.00 – 100.00)</div>
+                <div class="history-pills" id="dice-history-bar"></div>
+              </div>
+              <div class="dice-stage-body">
+                <div class="dice-result-showcase">
+                  <div class="dice-big-readout mono" id="dice-result-number">50.50</div>
+                  <div class="dice-outcome-tag" id="dice-outcome-tag">DRAG SLIDER OR CLICK ROLL</div>
+                </div>
+
+                <!-- Interactive 0-100 Slider Track -->
+                <div class="dice-slider-container">
+                  <div class="dice-scale-labels mono">
+                    <span>0</span>
+                    <span>25</span>
+                    <span>50</span>
+                    <span>75</span>
+                    <span>100</span>
+                  </div>
+                  <div class="dice-track-wrapper" id="dice-track-wrapper">
+                    <div class="dice-track-bg" id="dice-track-bg"></div>
+                    <!-- Animated Roll Marker -->
+                    <div class="dice-roll-marker hidden" id="dice-roll-marker">
+                      <div class="marker-cube mono" id="dice-marker-val">50.00</div>
+                      <div class="marker-arrow"></div>
+                    </div>
+                    <input type="range" id="dice-slider" min="2" max="98" step="0.5" value="50.5" class="dice-range-input" />
+                  </div>
+                </div>
+
+                <!-- Bottom Stats Bar for Dice -->
+                <div class="dice-metrics-bar">
+                  <div class="metric-card">
+                    <span class="m-label">Multiplier</span>
+                    <div class="m-input-wrap">
+                      <input type="number" id="dice-mult-input" class="mono" value="2.0000" step="0.1" min="1.0102" max="49.5" />
+                      <span class="m-suffix">×</span>
+                    </div>
+                  </div>
+                  <div class="metric-card">
+                    <span class="m-label" id="dice-roll-mode-label">Roll Over</span>
+                    <div class="m-input-wrap">
+                      <input type="number" id="dice-target-input" class="mono" value="50.50" step="0.5" min="2" max="98" />
+                      <span class="m-suffix">⇄</span>
+                    </div>
+                  </div>
+                  <div class="metric-card">
+                    <span class="m-label">Win Chance</span>
+                    <div class="m-input-wrap">
+                      <input type="number" id="dice-chance-input" class="mono" value="49.50" step="0.5" min="2" max="98" />
+                      <span class="m-suffix">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. LIMBO STAGE -->
+            <div class="stage-view" id="stage-limbo">
+              <div class="stage-top-bar">
+                <div class="stage-label">HIGH-SPEED MULTIPLIER LIMBO</div>
+                <div class="history-pills" id="limbo-history-bar"></div>
+              </div>
+              <div class="limbo-stage-body">
+                <div class="limbo-centerpiece">
+                  <div class="limbo-glow-ring" id="limbo-glow-ring"></div>
+                  <div class="limbo-big-multiplier mono" id="limbo-readout">1.00×</div>
+                  <div class="limbo-sub-banner mono" id="limbo-sub-banner">TARGET: 2.00×</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Bottom Live Simulated & Player "Recent Plays" Feed -->
+        <section class="live-feed-section">
+          <div class="feed-header">
+            <div class="feed-title-wrap">
+              <span class="live-red-dot"></span>
+              <span class="feed-title">LIVE RECENT PLAYS</span>
+            </div>
+            <div class="feed-tabs">
+              <button class="feed-tab active" data-feed-filter="all">All Bets</button>
+              <button class="feed-tab" data-feed-filter="mine">My Bets</button>
+              <button class="feed-tab" data-feed-filter="high">High Rollers</button>
+            </div>
+          </div>
+          <div class="feed-table-wrap">
+            <table class="feed-table">
+              <thead>
+                <tr>
+                  <th>Game</th>
+                  <th>Player</th>
+                  <th>Time</th>
+                  <th class="right">Bet Amount</th>
+                  <th class="right">Multiplier</th>
+                  <th class="right">Payout</th>
+                </tr>
+              </thead>
+              <tbody id="live-feed-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Provably Fair Modal -->
+  <div class="modal-backdrop hidden" id="fairness-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Provably Fair RNG Verification</h3>
+        <button class="close-modal-btn" id="close-fairness-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          All outcomes on <strong>VOLT.GG</strong> are generated using cryptographic-grade client RNG (`crypto.getRandomValues`) with an authentic <strong>1.0% house edge (99.0% RTP)</strong>. Play uses 100% virtual credits.
+        </p>
+        <div class="seed-field">
+          <label>Active Client Seed</label>
+          <div class="seed-row">
+            <input type="text" id="client-seed-input" class="mono-input" readonly />
+            <button class="q-btn mono" id="rotate-seed-btn">Rotate Seed</button>
+          </div>
+        </div>
+        <div class="seed-field">
+          <label>Server Seed Hash (SHA-256 Simulated)</label>
+          <input type="text" id="server-seed-hash" class="mono-input" readonly />
+        </div>
+        <div class="seed-field">
+          <label>Total Nonce Count</label>
+          <input type="text" id="seed-nonce-count" class="mono-input" readonly value="0" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
